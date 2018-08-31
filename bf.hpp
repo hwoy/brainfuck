@@ -6,12 +6,14 @@
 #include <memory>
 #include <string>
 
+using cdata_t = char;
+using ip_t = std::basic_string<cdata_t>;
 
-class Cell: protected std::unique_ptr<char[]>
+class Cell: protected std::unique_ptr<cdata_t[]>
 {
 	protected:
 	
-	char *ptr;
+	cdata_t *ptr;
 	std::size_t length;
 	
 	public:
@@ -23,7 +25,7 @@ class Cell: protected std::unique_ptr<char[]>
 	
 	void setcell(std::size_t s)
 	{
-		reset(new char[s]);
+		reset(new cdata_t[s]);
 		ptr=get();
 		length=s;
 		
@@ -38,19 +40,19 @@ class Cell: protected std::unique_ptr<char[]>
 		length=0;
 	}
 	
-	const char * const getptr() const {return ptr;}
+	const cdata_t * const getptr() const {return ptr;}
 	
 	std::size_t getlength() const {return length;}
 	
-	char * const operator ++ () {return ++ptr;}
+	cdata_t * const operator ++ () {return ++ptr;}
 	
-	char * const operator -- () {return --ptr;}
+	cdata_t * const operator -- () {return --ptr;}
 	
-	char & operator * () const {return *ptr;}
+	cdata_t & operator * () const {return *ptr;}
 	
-	char * const operator + (std::size_t n) const {return (ptr+n);}
+	cdata_t * const operator + (std::size_t n) const {return (ptr+n);}
 	
-	char * const operator - (std::size_t n) const {return (ptr-n);}
+	cdata_t * const operator - (std::size_t n) const {return (ptr-n);}
 	
 };
 
@@ -91,7 +93,7 @@ class Brainfuck
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
 	
 	
-	void kernel (Cell &cell,const std::string &str)
+	void kernel (Cell &cell,const ip_t &str)
 	{
 		auto i=str.begin();
 		
@@ -122,7 +124,7 @@ class Brainfuck
 	}
 
 	
-	void operator() (Cell &cell,const std::string &str)
+	void operator() (Cell &cell,const ip_t &str)
 	{
 		kernel(cell,str);
 	}

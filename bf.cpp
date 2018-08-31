@@ -10,7 +10,11 @@
 int main(int argc , const char *argv[])
 {
 
-if(argc<=1) return 0;
+if(argc<=1)
+{
+	usage(argv[0],"a Brainf**k Interpreter.");
+	return 0;
+}
 
 std::ofstream fout;
 std::ifstream fin;
@@ -40,8 +44,8 @@ Cell cell;
 Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
 	
-std::string str;
-std::unique_ptr<char[]> buff(new char[BSIZE+1]);
+ip_t str;
+std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 std::size_t count=BSIZE;
 	
 	do

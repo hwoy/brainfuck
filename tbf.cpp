@@ -9,7 +9,7 @@
 #include "bf.hpp"
 #include "bfhelp.hpp"
 
-using num_t = int;
+using num_t = cdata_t;
 
 using factor_t = std::pair<num_t,num_t>;
 
@@ -51,11 +51,11 @@ static num_t findfactor(num_t n)
 	return n;
 }
 
-static std::string a2bfA(num_t n, Cell &cell)
+static ip_t a2bfA(num_t n, Cell &cell)
 {
 	num_t a,b;
 	num_t m= n>*(cell+1) ? n-*(cell+1) : *(cell+1)-n;
-	std::string str;
+	ip_t str;
 	std::tie(a,b) = minfactor(factor(findfactor(m)));
 	
 	(a>*cell)? str.append(a-(*cell),'+') : str.append((*cell)-a,'-') ;
@@ -79,9 +79,9 @@ static std::string a2bfA(num_t n, Cell &cell)
 	return str;
 }
 
-static std::string a2bfB(num_t n, Cell &cell)
+static ip_t a2bfB(num_t n, Cell &cell)
 {
-	std::string str(" > ");
+	ip_t str(" > ");
 	++cell;
 	(n>*cell) ? str.append(n-*cell,'+') : str.append(*cell-n,'-');
 	
@@ -93,7 +93,7 @@ static std::string a2bfB(num_t n, Cell &cell)
 	return str;
 }
 
-static std::string i2bf(num_t n, Cell &cell)
+static ip_t i2bf(num_t n, Cell &cell)
 {
 	if( ((n>*(cell+1))&&((n-*(cell+1))<=11)) || ((n<=*(cell+1))&&((*(cell+1)-n)<=11))) return a2bfB(n,cell);
 	
@@ -101,9 +101,9 @@ static std::string i2bf(num_t n, Cell &cell)
 }
 
 template <class T>
-static std::string it2bf(T i,T j, Cell &cell)
+static ip_t it2bf(T i,T j, Cell &cell)
 {
-	std::string str("");
+	ip_t str("");
 	
 	for(;i != j; ++i)
 	{
@@ -117,7 +117,11 @@ static std::string it2bf(T i,T j, Cell &cell)
 int main(int argc , const char *argv[])
 {
 
-if(argc<=1) return 0;
+if(argc<=1)
+{
+	usage(argv[0],"a Text to Brainf**k Encoder.");
+	return 0;
+}
 
 std::ofstream fout;
 std::ifstream fin;
@@ -146,8 +150,8 @@ if(argc > 2)
 Cell cell;
 std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
-std::string str;
-std::unique_ptr<char[]> buff(new char[BSIZE+1]);
+ip_t str;
+std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 std::size_t count=BSIZE;
 
 
