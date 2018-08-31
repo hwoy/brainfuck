@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <memory>
 #include <string>
 #include <algorithm>
 #include <vector>
@@ -55,45 +56,45 @@ static ip_t a2bfA(num_t n, Cell &cell)
 {
 	num_t a,b;
 	num_t m= n>*(cell+1) ? n-*(cell+1) : *(cell+1)-n;
-	ip_t str;
+	ip_t ip;
 	std::tie(a,b) = minfactor(factor(findfactor(m)));
 	
-	(a>*cell)? str.append(a-(*cell),'+') : str.append((*cell)-a,'-') ;
-	str.append(" [> ");
+	(a>*cell)? ip.append(a-(*cell),'+') : ip.append((*cell)-a,'-') ;
+	ip.append(" [> ");
 	
 	*cell=0;
 	++cell;
 	
-	(n>*cell)? str.append(b,'+') : str.append(b,'-') ;
-	str.append(" <-] > ");
+	(n>*cell)? ip.append(b,'+') : ip.append(b,'-') ;
+	ip.append(" <-] > ");
 	
 	
-	if( (n>*cell) && ((*cell+a*b)<n) ) str.append(n-(*cell+a*b),'+')  ;
-	else if((*cell>=n) && ((n+a*b)<*cell) ) str.append(*cell-(n+a*b),'-')  ;
+	if( (n>*cell) && ((*cell+a*b)<n) ) ip.append(n-(*cell+a*b),'+')  ;
+	else if((*cell>=n) && ((n+a*b)<*cell) ) ip.append(*cell-(n+a*b),'-')  ;
 	
-	str.append(" . < ");
+	ip.append(" . < ");
 
 	*cell=n;
 	--cell;
 	
-	return str;
+	return ip;
 }
 
 static ip_t a2bfB(num_t n, Cell &cell)
 {
-	ip_t str(" > ");
+	ip_t ip(" > ");
 	++cell;
-	(n>*cell) ? str.append(n-*cell,'+') : str.append(*cell-n,'-');
+	(n>*cell) ? ip.append(n-*cell,'+') : ip.append(*cell-n,'-');
 	
-	str.append(" . < ");
+	ip.append(" . < ");
 	
 	*cell=n;
 	--cell;
 	
-	return str;
+	return ip;
 }
 
-static ip_t i2bf(num_t n, Cell &cell)
+static ip_t a2bf(num_t n, Cell &cell)
 {
 	if( ((n>*(cell+1))&&((n-*(cell+1))<=11)) || ((n<=*(cell+1))&&((*(cell+1)-n)<=11))) return a2bfB(n,cell);
 	
@@ -103,14 +104,14 @@ static ip_t i2bf(num_t n, Cell &cell)
 template <class T>
 static ip_t it2bf(T i,T j, Cell &cell)
 {
-	ip_t str("");
+	ip_t ip;
 	
 	for(;i != j; ++i)
 	{
-		str+=i2bf(*i,cell);
+		ip+=a2bf(*i,cell);
 	}
 	
-	return str;
+	return ip;
 }
 
 
@@ -132,7 +133,7 @@ if(argc > 1)
 	fin.open(argv[1],std::ios::in | std::ios::binary);
 	if(!fin) 
 	{
-		showerr(err_in,err,argv[1]);
+		showerr(err_fin,err,argv[1]);
 		return 1;
 	}
 }
@@ -142,7 +143,7 @@ if(argc > 2)
 	fout.open(argv[2],std::ios::out | std::ios::binary);
 	if(!fout) 
 	{
-		showerr(err_out,err,argv[2]);
+		showerr(err_fout,err,argv[2]);
 		return 1;
 	}
 }
@@ -150,7 +151,7 @@ if(argc > 2)
 Cell cell;
 std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
-ip_t str;
+ip_t ip;
 std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 std::size_t count=BSIZE;
 

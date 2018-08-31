@@ -1,7 +1,7 @@
 static const char *err[] = {"Can not access INPUT FILE: ","Can not access OUTPUT FILE: ",nullptr};
 
 enum{
-	err_in,err_out
+	err_fin,err_fout
 };
 
 static void showerr (std::size_t id,const char *err[],const char *str)
