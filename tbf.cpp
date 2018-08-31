@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "bf.hpp"
+#include "bfhelp.hpp"
 
 using factor_t = std::pair<unsigned int,unsigned int>;
 
@@ -110,8 +111,6 @@ std::string it2bf(T i,T j, Cell &cell)
 	return str;
 }
 
-#define BSIZE (4*1024)
-
 
 int main(int argc , const char *argv[])
 {
@@ -127,7 +126,7 @@ if(argc > 1)
 	fin.open(argv[1],std::ios::in | std::ios::binary);
 	if(!fin) 
 	{
-		std::cerr << "ERROR ID 0: Can not access INPUT FILE: " << argv[1] << std::endl;
+		showerr(err_in,err,argv[1]);
 		return 1;
 	}
 }
@@ -137,7 +136,7 @@ if(argc > 2)
 	fout.open(argv[2],std::ios::out | std::ios::binary);
 	if(!fout) 
 	{
-		std::cerr << "ERROR ID 1: Can not access OUTPUT FILE: " << argv[2] << std::endl;
+		showerr(err_out,err,argv[2]);
 		return 1;
 	}
 }
