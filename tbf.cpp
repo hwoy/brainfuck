@@ -12,7 +12,7 @@
 using factor_t = std::pair<unsigned int,unsigned int>;
 
 
-std::vector<factor_t> factor(unsigned int n)
+static std::vector<factor_t> factor(unsigned int n)
 {
 	std::vector<factor_t> vec;
 	
@@ -23,7 +23,7 @@ std::vector<factor_t> factor(unsigned int n)
 	return vec;
 }
 
-factor_t minfactor(const std::vector<factor_t> &vec)
+static factor_t minfactor(const std::vector<factor_t> &vec)
 {
 	return *std::min_element(vec.begin(),vec.end(),
 	[](const factor_t &a,const factor_t &b)
@@ -32,7 +32,7 @@ factor_t minfactor(const std::vector<factor_t> &vec)
 	});
 }
 
-bool isprime(unsigned int n)
+static bool isprime(unsigned int n)
 {
 	for(unsigned int i=2;i*i<=n;++i)
 	{
@@ -42,14 +42,14 @@ bool isprime(unsigned int n)
 	return true;
 }
 
-unsigned int findfactor(unsigned int n)
+static unsigned int findfactor(unsigned int n)
 {
 	while(isprime(n)) n--;
 	
 	return n;
 }
 
-std::string a2bfA(unsigned int n, Cell &cell)
+static std::string a2bfA(unsigned int n, Cell &cell)
 {
 	unsigned int a,b;
 	unsigned int m= n>*(cell+1) ? n-*(cell+1) : *(cell+1)-n;
@@ -77,7 +77,7 @@ std::string a2bfA(unsigned int n, Cell &cell)
 	return str;
 }
 
-std::string a2bfB(unsigned int n, Cell &cell)
+static std::string a2bfB(unsigned int n, Cell &cell)
 {
 	std::string str(" > ");
 	++cell;
@@ -91,7 +91,7 @@ std::string a2bfB(unsigned int n, Cell &cell)
 	return str;
 }
 
-std::string i2bf(unsigned int n, Cell &cell)
+static std::string i2bf(unsigned int n, Cell &cell)
 {
 	if( ((n>*(cell+1))&&((n-*(cell+1))<=11)) || ((n<=*(cell+1))&&((*(cell+1)-n)<=11))) return a2bfB(n,cell);
 	
@@ -99,7 +99,7 @@ std::string i2bf(unsigned int n, Cell &cell)
 }
 
 template <class T>
-std::string it2bf(T i,T j, Cell &cell)
+static std::string it2bf(T i,T j, Cell &cell)
 {
 	std::string str("");
 	
