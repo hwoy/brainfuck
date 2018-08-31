@@ -54,8 +54,5 @@ std::size_t count=BSIZE;
 bf(cell,str);
 	
 
-
-
-
 return 0;
 }

@@ -3,7 +3,10 @@ TBF = tbf.exe
 
 CXX = g++
 
-CXXFLAGS = -g
+DEBUGFLAGS = -g -Wall
+RELEASEFLAGS = -O2
+
+CXXFLAGS = $(DEBUGFLAGS)
 
 .PHONY: all clean
 
@@ -16,4 +19,4 @@ $(TBF): tbf.cpp bf.hpp
 		$(CXX) -o $(TBF) $(CXXFLAGS) tbf.cpp
 		
 clean:
-	del *.exe *.o
+	del *.exe *.o *.txt

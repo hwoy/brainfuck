@@ -9,14 +9,16 @@
 #include "bf.hpp"
 #include "bfhelp.hpp"
 
-using factor_t = std::pair<unsigned int,unsigned int>;
+using num_t = int;
+
+using factor_t = std::pair<num_t,num_t>;
 
 
-static std::vector<factor_t> factor(unsigned int n)
+static std::vector<factor_t> factor(num_t n)
 {
 	std::vector<factor_t> vec;
 	
-	for(unsigned int i=1;i<= (n/2)+1 ;++i)
+	for(num_t i=1;i<= (n/2)+1 ;++i)
 	{
 		if(!(n%i)) vec.push_back({i,n/i});
 	}
@@ -32,9 +34,9 @@ static factor_t minfactor(const std::vector<factor_t> &vec)
 	});
 }
 
-static bool isprime(unsigned int n)
+static bool isprime(num_t n)
 {
-	for(unsigned int i=2;i*i<=n;++i)
+	for(num_t i=2;i*i<=n;++i)
 	{
 		if(!(n%i)) return false;
 	}
@@ -42,17 +44,17 @@ static bool isprime(unsigned int n)
 	return true;
 }
 
-static unsigned int findfactor(unsigned int n)
+static num_t findfactor(num_t n)
 {
 	while(isprime(n)) n--;
 	
 	return n;
 }
 
-static std::string a2bfA(unsigned int n, Cell &cell)
+static std::string a2bfA(num_t n, Cell &cell)
 {
-	unsigned int a,b;
-	unsigned int m= n>*(cell+1) ? n-*(cell+1) : *(cell+1)-n;
+	num_t a,b;
+	num_t m= n>*(cell+1) ? n-*(cell+1) : *(cell+1)-n;
 	std::string str;
 	std::tie(a,b) = minfactor(factor(findfactor(m)));
 	
@@ -77,7 +79,7 @@ static std::string a2bfA(unsigned int n, Cell &cell)
 	return str;
 }
 
-static std::string a2bfB(unsigned int n, Cell &cell)
+static std::string a2bfB(num_t n, Cell &cell)
 {
 	std::string str(" > ");
 	++cell;
@@ -91,7 +93,7 @@ static std::string a2bfB(unsigned int n, Cell &cell)
 	return str;
 }
 
-static std::string i2bf(unsigned int n, Cell &cell)
+static std::string i2bf(num_t n, Cell &cell)
 {
 	if( ((n>*(cell+1))&&((n-*(cell+1))<=11)) || ((n<=*(cell+1))&&((*(cell+1)-n)<=11))) return a2bfB(n,cell);
 	
