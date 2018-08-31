@@ -52,7 +52,7 @@ std::string a2bfA(unsigned int n, Cell &cell)
 {
 	unsigned int a,b;
 	unsigned int m= n>*(cell+1) ? n-*(cell+1) : *(cell+1)-n;
-	std::string str("");
+	std::string str;
 	std::tie(a,b) = minfactor(factor(findfactor(m)));
 	
 	(a>*cell)? str.append(a-(*cell),'+') : str.append((*cell)-a,'-') ;
@@ -110,34 +110,53 @@ std::string it2bf(T i,T j, Cell &cell)
 	return str;
 }
 
-#define BSIZE (16)
+#define BSIZE (4*1024)
 
-int main(int argc , const char **argv)
-{
-if(argc >1)
+
+int main(int argc , const char *argv[])
 {
 
-std::ifstream fin(argv[1],std::ios::binary);
+if(argc<=1) return 0;
 
-if(fin)
+std::ofstream fout;
+std::ifstream fin;
+
+
+if(argc > 1)
 {
-	Cell cell;
-	std::unique_ptr<char[]> buff(new char[BSIZE+1]);
-	std::size_t count;
-	
+	fin.open(argv[1],std::ios::in | std::ios::binary);
+	if(!fin) 
+	{
+		std::cerr << "ERROR ID 0: Can not access INPUT FILE: " << argv[1] << std::endl;
+		return 1;
+	}
+}
+
+if(argc > 2)
+{
+	fout.open(argv[2],std::ios::out | std::ios::binary);
+	if(!fout) 
+	{
+		std::cerr << "ERROR ID 1: Can not access OUTPUT FILE: " << argv[2] << std::endl;
+		return 1;
+	}
+}
+
+Cell cell;
+std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
+
+std::string str;
+std::unique_ptr<char[]> buff(new char[BSIZE+1]);
+std::size_t count=BSIZE;
+
+
 	do
 	{
 		fin.read(buff.get(),BSIZE);
-		std::cout << it2bf(buff.get(),buff.get()+(count=fin.gcount()),cell);
+		out << it2bf(buff.get(),buff.get()+(count=fin.gcount()),cell);
 	}while(count>=BSIZE);
 
-	
-}
-else
-{
-	std::cerr << "can not open file: " << argv[1] << "\n";
-}
 
-}
+
 return 0;
 }
