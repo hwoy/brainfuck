@@ -46,14 +46,13 @@ Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 	
 ip_t ip;
 std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
-std::size_t count=BSIZE;
 	
 	do
 	{
 		fin.read(buff.get(),BSIZE);
-		ip.append(buff.get(),count=fin.gcount());
+		ip.append(buff.get(),fin.gcount());
 
-	}while(count>=BSIZE);
+	}while(fin.gcount()>=BSIZE);
 
 bf(cell,ip);
 	

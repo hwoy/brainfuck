@@ -19,4 +19,4 @@ $(TBF): tbf.cpp bf.hpp
 		$(CXX) -o $(TBF) $(CXXFLAGS) tbf.cpp
 		
 clean:
-	del *.exe *.o *.txt
+	del *.exe *.o *.txt *.bf

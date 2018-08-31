@@ -153,14 +153,12 @@ std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
 ip_t ip;
 std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
-std::size_t count=BSIZE;
-
 
 	do
 	{
 		fin.read(buff.get(),BSIZE);
-		out << it2bf(buff.get(),buff.get()+(count=fin.gcount()),cell);
-	}while(count>=BSIZE);
+		out << it2bf(buff.get(),buff.get()+fin.gcount(),cell);
+	}while(fin.gcount()>=BSIZE);
 
 
 
