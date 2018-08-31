@@ -91,14 +91,14 @@ class Brainfuck
 	public:
 	
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
-	
-	
-	void kernel (Cell &cell,const ip_t &str)
+
+	template <class T>
+	void kernel (Cell &cell,T begin, T end)
 	{
-		auto i=str.begin();
+		auto i=begin;
 		
 		
-		while(i != str.end())
+		while(i != end)
 		{
 			switch (*i)
 			{
@@ -112,21 +112,28 @@ class Brainfuck
 				case ',': *cell = std::cin.get(); break;
 				
 				case '[': 
-					if (*cell == 0) i =fn(1,i+1,str.end());
+					if (*cell == 0) i =fn(1,++i,end);
 					break;
 					
-				case ']': i =fp(-1,i-1,str.begin());
+				case ']': i =fp(-1,--i,begin);
 					continue;
 			}
 			
-			if(i!=str.end()) ++i;
+			if(i!=end) ++i;
 		}
+	}	
+	
+	
+	
+	void kernel (Cell &cell,const ip_t &ip)
+	{
+		kernel (cell,ip.begin(),ip.end());
 	}
 
 	
-	void operator() (Cell &cell,const ip_t &str)
+	void operator() (Cell &cell,const ip_t &ip)
 	{
-		kernel(cell,str);
+		kernel(cell,ip);
 	}
 };
 
