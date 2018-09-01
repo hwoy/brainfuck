@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 #include "bf.hpp"
 #include "bfhelp.hpp"
@@ -60,8 +61,8 @@ static ip_t a2bfA(num_t n, Cell &cell)
 	(a>*cell)? ip.insert(ip.end(),a-(*cell),'+') : ip.insert(ip.end(),(*cell)-a,'-') ;
 	
 	{
-		const char str[]=" [> ";
-		ip.insert(ip.end(),std::begin(str),std::end(str));
+		const std::string str=" [> ";
+		ip.insert(ip.end(),str.begin(),str.end());
 	}
 	
 	*cell=0;
@@ -70,8 +71,8 @@ static ip_t a2bfA(num_t n, Cell &cell)
 	(n>*cell)? ip.insert(ip.end(),b,'+') : ip.insert(ip.end(),b,'-') ;
 	
 	{
-		const char str[]=" <-] > ";
-		ip.insert(ip.end(),std::begin(str),std::end(str));
+		const std::string str=" <-] > ";
+		ip.insert(ip.end(),str.begin(),str.end());
 	}
 	
 	
@@ -79,8 +80,8 @@ static ip_t a2bfA(num_t n, Cell &cell)
 	else if((*cell>=n) && ((n+a*b)<*cell) ) ip.insert(ip.end(),*cell-(n+a*b),'-')  ;
 	
 	{
-		const char str[]=" . < ";
-		ip.insert(ip.end(),std::begin(str),std::end(str));
+		const std::string str=" . < ";
+		ip.insert(ip.end(),str.begin(),str.end());
 	}
 
 	*cell=n;
@@ -94,8 +95,8 @@ static ip_t a2bfB(num_t n, Cell &cell)
 	ip_t ip;
 	
 	{
-		const char str[]=" > ";
-		ip.insert(ip.end(),std::begin(str),std::end(str));
+		const std::string str=" > ";
+		ip.insert(ip.end(),str.begin(),str.end());
 	}
 	
 	++cell;
@@ -103,8 +104,8 @@ static ip_t a2bfB(num_t n, Cell &cell)
 	
 
 	{
-		const char str[]=" . < ";
-		ip.insert(ip.end(),std::begin(str),std::end(str));
+		const std::string str=" . < ";
+		ip.insert(ip.end(),str.begin(),str.end());
 	}	
 	
 	*cell=n;
