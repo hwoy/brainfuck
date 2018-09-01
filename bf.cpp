@@ -49,7 +49,7 @@ try{
 	do
 	{
 		fin.read(buff.get(),BSIZE);
-		ip.append(buff.get(),fin.gcount());
+		ip.insert(ip.end(),buff.get(),buff.get()+fin.gcount());
 
 	}while(fin.gcount()>=BSIZE);
 
