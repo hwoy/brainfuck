@@ -176,17 +176,11 @@ class Brainfuck
 		}
 	}	
 	
-	
-	
-	void kernel (Cell &cell,const ip_t &ip)
-	{
-		kernel (cell,ip.begin(),ip.end());
-	}
 
-	
-	void operator() (Cell &cell,const ip_t &ip)
+	template <class T>
+	void operator() (Cell &cell,const T &ip)
 	{
-		kernel(cell,ip);
+		kernel(cell,ip.begin(),ip.end());
 	}
 };
 
