@@ -4,9 +4,20 @@
 
 #include <iostream>
 #include <memory>
-#include <string>
 #include <exception>
+#include <vector>
 
+using cdata_t = char;
+using ip_t = std::vector<cdata_t>;
+
+template <class T,class U>
+std::basic_ostream<T,U> &operator << (std::basic_ostream<T,U> &out ,const ip_t &ip)
+{
+	for(const auto &i:ip)
+		out << i;
+	
+	return out;
+}
 
 class Bfexception : public std::exception
 {
@@ -42,9 +53,6 @@ const char *Bfexception::exc[]={
 	"[ must be end with ]. Please check your code.",
 	"] must be begin with [. Please check your code.",
 nullptr};
-
-using cdata_t = char;
-using ip_t = std::basic_string<cdata_t>;
 
 class Cell: protected std::unique_ptr<cdata_t[]>
 {

@@ -56,20 +56,31 @@ static ip_t a2bfA(num_t n, Cell &cell)
 	ip_t ip;
 	std::tie(a,b) = minfactor(factor(findfactor(m)));
 	
-	(a>*cell)? ip.append(a-(*cell),'+') : ip.append((*cell)-a,'-') ;
-	ip.append(" [> ");
+	(a>*cell)? ip.insert(ip.end(),a-(*cell),'+') : ip.insert(ip.end(),(*cell)-a,'-') ;
+	
+	{
+		const char str[]=" [> ";
+		ip.insert(ip.end(),std::begin(str),std::end(str));
+	}
 	
 	*cell=0;
 	++cell;
 	
-	(n>*cell)? ip.append(b,'+') : ip.append(b,'-') ;
-	ip.append(" <-] > ");
+	(n>*cell)? ip.insert(ip.end(),b,'+') : ip.insert(ip.end(),b,'-') ;
+	
+	{
+		const char str[]=" <-] > ";
+		ip.insert(ip.end(),std::begin(str),std::end(str));
+	}
 	
 	
-	if( (n>*cell) && ((*cell+a*b)<n) ) ip.append(n-(*cell+a*b),'+')  ;
-	else if((*cell>=n) && ((n+a*b)<*cell) ) ip.append(*cell-(n+a*b),'-')  ;
+	if( (n>*cell) && ((*cell+a*b)<n) ) ip.insert(ip.end(),n-(*cell+a*b),'+')  ;
+	else if((*cell>=n) && ((n+a*b)<*cell) ) ip.insert(ip.end(),*cell-(n+a*b),'-')  ;
 	
-	ip.append(" . < ");
+	{
+		const char str[]=" . < ";
+		ip.insert(ip.end(),std::begin(str),std::end(str));
+	}
 
 	*cell=n;
 	--cell;
@@ -79,11 +90,21 @@ static ip_t a2bfA(num_t n, Cell &cell)
 
 static ip_t a2bfB(num_t n, Cell &cell)
 {
-	ip_t ip(" > ");
-	++cell;
-	(n>*cell) ? ip.append(n-*cell,'+') : ip.append(*cell-n,'-');
+	ip_t ip;
 	
-	ip.append(" . < ");
+	{
+		const char str[]=" > ";
+		ip.insert(ip.end(),std::begin(str),std::end(str));
+	}
+	
+	++cell;
+	(n>*cell) ? ip.insert(ip.end(),n-*cell,'+') : ip.insert(ip.end(),*cell-n,'-');
+	
+
+	{
+		const char str[]=" . < ";
+		ip.insert(ip.end(),std::begin(str),std::end(str));
+	}	
 	
 	*cell=n;
 	--cell;
@@ -105,7 +126,8 @@ static ip_t it2bf(T i,T j, Cell &cell)
 	
 	for(;i != j; ++i)
 	{
-		ip+=a2bf(*i,cell);
+		auto ip2 = a2bf(*i,cell);
+		ip.insert(ip.end(),ip2.begin(),ip2.end());
 	}
 	
 	return ip;
