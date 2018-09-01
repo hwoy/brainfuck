@@ -5,6 +5,13 @@
 #include "bf.hpp"
 #include "bfhelp.hpp"
 
+static bool elem(cdata_t ch, const cdata_t *inst)
+{
+	while(*inst)
+		if(ch==*inst++) return true;
+
+	return false;
+}
 
 int main(int argc , const char *argv[])
 {
@@ -44,16 +51,37 @@ try{
 	Cell cell;
 	Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 	ip_t ip;
-	std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
+	cdata_t data;
 	
-	do
+	while(fin.read(&data,1), fin.gcount()>=1)
 	{
-		fin.read(buff.get(),BSIZE);
-		ip.insert(ip.end(),buff.get(),buff.get()+fin.gcount());
+		if(!elem(data,Brainfuck::inst)) continue;
+			
+		ip.clear();
+		ip.push_back(data);
+		
+		if(data=='[')
+		{
+			unsigned int n=1;
+			
+			while(fin.read(&data,1), fin.gcount()>=1)
+			{
+				if(data=='[') ++n;
+				else if(data==']') --n;
+				
+				ip.push_back(data);
+				
+				if(!n) break;
+			}
+			
+			if(n) throw Bfexception(Bfexception::eid_while);
+		}
+		
+		else if(data==']') throw Bfexception(Bfexception::eid_endwhile);
+		
+		bf.kernel(cell,ip.begin(),ip.end());
+	}
 
-	}while(fin.gcount()>=BSIZE);
-
-	bf(cell,ip);
 }catch(const std::exception &e)
 {
 	std::cerr << std::endl << "Exception:"  << std::endl

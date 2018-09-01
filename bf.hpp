@@ -154,6 +154,7 @@ class Brainfuck
 	}
 	
 	public:
+	static const cdata_t inst[];
 	
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
 
@@ -204,6 +205,7 @@ class Brainfuck
 		return n;
 	}
 };
-
+	
+	const cdata_t Brainfuck::inst[] = "><+-.,[]";
 
 #endif
