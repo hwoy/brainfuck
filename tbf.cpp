@@ -1,11 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
-#include <string>
-#include <algorithm>
 #include <vector>
-#include <tuple>
-#include <memory>
+#include <algorithm>
 
 #include "bf.hpp"
 #include "bfhelp.hpp"
