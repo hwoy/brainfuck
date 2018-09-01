@@ -11,10 +11,11 @@ using num_t = cdata_t;
 
 using factor_t = std::pair<num_t,num_t>;
 
+using listfactor_t = std::vector<factor_t>;
 
-static std::vector<factor_t> factor(num_t n)
+static listfactor_t factor(num_t n)
 {
-	std::vector<factor_t> vec;
+	listfactor_t vec;
 	
 	for(num_t i=1;i<= (n/2)+1 ;++i)
 	{
@@ -23,7 +24,7 @@ static std::vector<factor_t> factor(num_t n)
 	return vec;
 }
 
-static factor_t minfactor(const std::vector<factor_t> &vec)
+static factor_t minfactor(const listfactor_t &vec)
 {
 	return *std::min_element(vec.begin(),vec.end(),
 	[](const factor_t &a,const factor_t &b)
