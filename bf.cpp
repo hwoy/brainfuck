@@ -13,6 +13,25 @@ static bool elem(cdata_t ch, const cdata_t *inst)
 	return false;
 }
 
+static unsigned int bracket(std::istream &fin,ip_t &ip)
+{
+	unsigned int n=1;
+	cdata_t data;
+			
+	while(fin.read(&data,1), fin.gcount()>=1)
+		{
+			if(data=='[') ++n;
+			else if(data==']') --n;
+				
+			ip.push_back(data);
+				
+			if(!n) break;
+		}
+		
+	return n;
+}
+
+
 int main(int argc , const char *argv[])
 {
 
@@ -60,24 +79,9 @@ try{
 		ip.clear();
 		ip.push_back(data);
 		
-		if(data=='[')
-		{
-			unsigned int n=1;
-			
-			while(fin.read(&data,1), fin.gcount()>=1)
-			{
-				if(data=='[') ++n;
-				else if(data==']') --n;
-				
-				ip.push_back(data);
-				
-				if(!n) break;
-			}
-			
-			if(n) throw Bfexception(Bfexception::eid_while);
-		}
+		if(data=='[' && bracket(fin,ip))  throw Bfexception(Bfexception::eid_while);
 		
-		else if(data==']') throw Bfexception(Bfexception::eid_endwhile);
+		else if(data==']') 				 throw Bfexception(Bfexception::eid_endwhile);
 		
 		bf.kernel(cell,ip.begin(),ip.end());
 	}
