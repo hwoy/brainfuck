@@ -10,8 +10,8 @@
 using cdata_t = char;
 using ip_t = std::vector<cdata_t>;
 
-template <class T,class U>
-std::basic_ostream<T,U> &operator << (std::basic_ostream<T,U> &out ,const ip_t &ip)
+template <class T,class U, class V>
+std::basic_ostream<T,U> &operator << (std::basic_ostream<T,U> &out ,const V &ip)
 {
 	for(const auto &i:ip)
 		out << i;
