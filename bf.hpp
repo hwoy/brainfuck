@@ -28,7 +28,9 @@ class Bfexception : public std::exception
 		eid_incptr,
 		eid_decptr,
 		eid_addptr,
-		eid_subptr
+		eid_subptr,
+		eid_while,
+		eid_endwhile
 	};
 };
 
@@ -37,6 +39,8 @@ const char *Bfexception::exc[]={
 	"Can not decrease PTR Cell. Please check your code.",
 	"Can not Addition PTR Cell. Please increase mem Cell.",
 	"Can not Subtraction PTR Cell. Please check your code.",
+	"[ must be end with ]. Please check your code.",
+	"] must be begin with [. Please check your code.",
 nullptr};
 
 using cdata_t = char;
@@ -114,7 +118,7 @@ class Brainfuck
 	std::ostream out;
 
 	template <class T>
-	static T fn(int n, T i, T j)
+	static std::pair<T,int> fn(int n, T i, T j)
 	{
 		while(n && i!=j)
 		{
@@ -124,11 +128,11 @@ class Brainfuck
 			if(n) ++i;
 		}
 		
-		return i;
+		return std::make_pair(i,n);
 	}
 
 	template <class T>
-	static T fp(int n, T i, T j)
+	static std::pair<T,int> fp(int n, T i, T j)
 	{
 		while(n && i!=j)
 		{
@@ -138,7 +142,7 @@ class Brainfuck
 			if(n) --i;
 		}
 		
-		return i;
+		return std::make_pair(i,n);
 	}
 	
 	public:
@@ -146,7 +150,7 @@ class Brainfuck
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
 
 	template <class T>
-	void kernel (Cell &cell,T begin, T end)
+	void kernel (Cell &cell,T begin, T end,int n=0)
 	{
 		auto i=begin;
 		
@@ -165,10 +169,15 @@ class Brainfuck
 				case ',': *cell = std::cin.get(); break;
 				
 				case '[': 
-					if (*cell == 0) i =fn(1,++i,end);
+					if (*cell == 0)
+					{
+						std::tie(i,n) =fn(1,++i,end);
+						if(i==end && n) throw Bfexception(Bfexception::eid_while);
+					}
 					break;
 					
-				case ']': i =fp(-1,--i,begin);
+				case ']': std::tie(i,n) =fp(-1,--i,begin);
+						  if(i==begin && n) throw Bfexception(Bfexception::eid_endwhile);
 					continue;
 			}
 			
