@@ -32,7 +32,12 @@ class Bfexception : public std::exception
 	};
 };
 
-const char *Bfexception::exc[]={"Can not increase PTR Cell. Please increase mem Cell.","Can not decrease PTR Cell. Please check your code.",nullptr};
+const char *Bfexception::exc[]={
+	"Can not increase PTR Cell. Please increase mem Cell.",
+	"Can not decrease PTR Cell. Please check your code.",
+	"Can not Addition PTR Cell. Please increase mem Cell.",
+	"Can not Subtraction PTR Cell. Please check your code.",
+nullptr};
 
 using cdata_t = char;
 using ip_t = std::basic_string<cdata_t>;
