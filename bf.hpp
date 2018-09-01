@@ -158,7 +158,7 @@ class Brainfuck
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
 
 	template <class T>
-	void kernel (Cell &cell,T begin, T end,int n=0)
+	int kernel (Cell &cell,T begin, T end,int n=0)
 	{
 		auto i=begin;
 		
@@ -178,26 +178,30 @@ class Brainfuck
 				
 				case '[': 
 					if (*cell == 0)
-					{
 						std::tie(i,n) =fn(1,++i,end);
-						if(i==end && n) throw Bfexception(Bfexception::eid_while);
-					}
+
 					break;
 					
 				case ']': std::tie(i,n) =fp(-1,--i,begin);
-						  if(i==begin && n) throw Bfexception(Bfexception::eid_endwhile);
 					continue;
 			}
 			
 			if(i!=end) ++i;
 		}
+		
+		return n;
 	}	
 	
 
 	template <class T>
-	void operator() (Cell &cell,const T &ip)
+	int operator() (Cell &cell,const T &ip)
 	{
-		kernel(cell,ip.begin(),ip.end());
+		int n = kernel(cell,ip.begin(),ip.end());
+		
+		if(n>0) throw Bfexception(Bfexception::eid_while);
+		else if(n<0) throw Bfexception(Bfexception::eid_endwhile);
+		
+		return n;
 	}
 };
 
