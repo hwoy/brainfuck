@@ -3,8 +3,10 @@ TBF = tbf
 
 CXX = g++
 
-DEBUGFLAGS = -g -Wall
-RELEASEFLAGS = -O2 -Wall
+STD =c++11
+
+DEBUGFLAGS = -g -Wall -std=$(STD) -pedantic
+RELEASEFLAGS = -O2 -Wall -std=$(STD) -pedantic
 
 CXXFLAGS = $(DEBUGFLAGS)
 
