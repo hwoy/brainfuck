@@ -40,10 +40,10 @@ if(argc > 2)
 	}
 }
 
-Cell cell;
-Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
-try{	
+try{
+	Cell cell;
+	Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 	ip_t ip;
 	std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 	
