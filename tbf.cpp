@@ -148,9 +148,10 @@ if(argc > 2)
 	}
 }
 
-Cell cell;
+
 std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
+Cell cell;
 ip_t ip;
 std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 
