@@ -5,6 +5,34 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <exception>
+
+
+class Bfexception : public std::exception
+{
+	const char *msg;
+	unsigned int id;
+	
+	public:
+	Bfexception(std::size_t eid):msg(exc[eid]),id(eid) {}
+	~Bfexception(){}
+	
+	const char* what() const noexcept
+	{
+		return msg;
+	}
+	
+	static const char *exc[];
+	enum eid
+	{
+		eid_incptr,
+		eid_decptr,
+		eid_addptr,
+		eid_subptr
+	};
+};
+
+const char *Bfexception::exc[]={"Can not increase PTR Cell. Please increase mem Cell.","Can not decrease PTR Cell. Please check your code.",nullptr};
 
 using cdata_t = char;
 using ip_t = std::basic_string<cdata_t>;
@@ -44,15 +72,35 @@ class Cell: protected std::unique_ptr<cdata_t[]>
 	
 	std::size_t getlength() const {return length;}
 	
-	cdata_t * const operator ++ () {return ++ptr;}
+	cdata_t * const operator ++ () 
+	{
+		if(ptr+1>=get()+length) throw Bfexception(Bfexception::eid_incptr);
+		
+		return ++ptr;
+	}
 	
-	cdata_t * const operator -- () {return --ptr;}
+	cdata_t * const operator -- () 
+	{
+		if(ptr-1<get()) throw Bfexception(Bfexception::eid_decptr);
+		
+		return --ptr;
+	}
 	
 	cdata_t & operator * () const {return *ptr;}
 	
-	cdata_t * const operator + (std::size_t n) const {return (ptr+n);}
+	cdata_t * const operator + (std::size_t n) const 
+	{
+		if(ptr+n>=get()+length) throw Bfexception(Bfexception::eid_addptr);
+		
+		return (ptr+n);
+	}
 	
-	cdata_t * const operator - (std::size_t n) const {return (ptr-n);}
+	cdata_t * const operator - (std::size_t n) const 
+	{
+		if(ptr-n<get()) throw Bfexception(Bfexception::eid_subptr);
+		
+		return (ptr-n);
+	}
 	
 };
 

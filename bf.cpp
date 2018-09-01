@@ -43,9 +43,9 @@ if(argc > 2)
 Cell cell;
 Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
-	
-ip_t ip;
-std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
+try{	
+	ip_t ip;
+	std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 	
 	do
 	{
@@ -54,7 +54,12 @@ std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 
 	}while(fin.gcount()>=BSIZE);
 
-bf(cell,ip);
+	bf(cell,ip);
+}catch(const std::exception &e)
+{
+	std::cerr << std::endl << "Exception:"  << std::endl
+			  << e.what() << std::endl;
+}
 	
 
 return 0;
