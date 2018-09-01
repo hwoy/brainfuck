@@ -30,4 +30,4 @@ $(TBF)-r: tbf.cpp bf.hpp
 		$(CXX) -o $(TBF)-r $(RELEASEFLAGS) tbf.cpp		
 		
 clean:
-	rm -rf *.exe *.o *.txt *.bf
+	rm -rf *.exe *.o  *.bf

@@ -19,7 +19,7 @@ std::basic_ostream<T,U> &operator << (std::basic_ostream<T,U> &out ,const V &ip)
 	return out;
 }
 
-class Bfexception : public std::exception
+class Bfexception final: public std::exception
 {
 	const char *msg;
 	unsigned int id;
@@ -28,7 +28,7 @@ class Bfexception : public std::exception
 	Bfexception(std::size_t eid):msg(exc[eid]),id(eid) {}
 	~Bfexception(){}
 	
-	const char* what() const noexcept
+	const char* what() const noexcept override
 	{
 		return msg;
 	}
