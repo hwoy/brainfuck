@@ -8,7 +8,7 @@
 #include "bf.hpp"
 #include "bfhelp.hpp"
 
-#define COL 64
+#define COL (64*2)
 
 using num_t = cdata_t;
 
@@ -169,7 +169,7 @@ if(argc > 1)
 
 if(argc > 2)
 {
-	fout.open(argv[2],std::ios::out | std::ios::binary);
+	fout.open(argv[2]);
 	if(!fout) 
 	{
 		showerr(err_fout,err,argv[2]);
