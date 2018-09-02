@@ -8,7 +8,6 @@
 #include "bf.hpp"
 #include "bfhelp.hpp"
 
-#define COL (64*2)
 
 using num_t = cdata_t;
 
