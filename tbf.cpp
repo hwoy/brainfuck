@@ -19,6 +19,8 @@ static listfactor_t factor(num_t n)
 {
 	listfactor_t vec;
 	
+	if(n<=1) return listfactor_t{std::make_pair(n,n)};
+	
 	for(num_t i=1;i<= (n/2)+1 ;++i)
 	{
 		if(!(n%i)) vec.push_back({i,n/i});
@@ -28,6 +30,7 @@ static listfactor_t factor(num_t n)
 
 static factor_t minfactor(const listfactor_t &vec)
 {
+		
 	return *std::min_element(vec.begin(),vec.end(),
 	[](const factor_t &a,const factor_t &b)
 	{
@@ -37,6 +40,7 @@ static factor_t minfactor(const listfactor_t &vec)
 
 static bool isprime(num_t n)
 {
+		
 	for(num_t i=2;i*i<=n;++i)
 	{
 		if(!(n%i)) return false;
@@ -47,6 +51,8 @@ static bool isprime(num_t n)
 
 static num_t findfactor(num_t n)
 {
+	if(n<=2) return n;
+		
 	while(isprime(n)) n--;
 	
 	return n;
@@ -59,33 +65,32 @@ static void appendip(ip_t &ip,const std::string &str)
 
 static ip_t a2bfA(num_t n, Cell &cell)
 {
-	num_t a,b;
-	num_t m= n>*(cell+1) ? n-*(cell+1) : *(cell+1)-n;
 	ip_t ip;
+	
+	num_t a,b;
+	num_t m= n>*(cell) ? n-*(cell) : *(cell)-n;
 	std::tie(a,b) = minfactor(factor(findfactor(m)));
+	
+	
+	appendip(ip,">");++cell;
 	
 	(a>*cell)? ip.insert(ip.end(),a-(*cell),'+') : ip.insert(ip.end(),(*cell)-a,'-') ;
 	
-
-	appendip(ip," [> ");
-	
 	*cell=0;
-	++cell;
+	
+	appendip(ip,"[<");--cell;
 	
 	(n>*cell)? ip.insert(ip.end(),b,'+') : ip.insert(ip.end(),b,'-') ;
 	
+	appendip(ip,">-]<");
 	
-	appendip(ip," <-] > ");
 	
 	
 	if( (n>*cell) && ((*cell+a*b)<n) ) ip.insert(ip.end(),n-(*cell+a*b),'+')  ;
 	else if((*cell>=n) && ((n+a*b)<*cell) ) ip.insert(ip.end(),*cell-(n+a*b),'-')  ;
 	
-	
-	appendip(ip," . < ");
-
 	*cell=n;
-	--cell;
+	appendip(ip,".");
 	
 	return ip;
 }
@@ -94,23 +99,19 @@ static ip_t a2bfB(num_t n, Cell &cell)
 {
 	ip_t ip;
 	
-	appendip(ip," > ");
-	
-	++cell;
 	(n>*cell) ? ip.insert(ip.end(),n-*cell,'+') : ip.insert(ip.end(),*cell-n,'-');
 	
-
-	appendip(ip," . < ");	
-	
 	*cell=n;
-	--cell;
+
+	appendip(ip,".");	
+	
 	
 	return ip;
 }
 
 static ip_t a2bf(num_t n, Cell &cell)
 {
-	if( ((n>*(cell+1))&&((n-*(cell+1))<=11)) || ((n<=*(cell+1))&&((*(cell+1)-n)<=11))) return a2bfB(n,cell);
+	if( ((n>*cell)&&((n-*cell)<=11)) || ((n<=*cell)&&((*cell-n)<=11)) ) return a2bfB(n,cell);
 	
 	return a2bfA(n,cell);
 }
