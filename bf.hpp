@@ -10,14 +10,6 @@
 using cdata_t = char;
 using ip_t = std::vector<cdata_t>;
 
-template <class T,class U, class V>
-std::basic_ostream<T,U> &operator << (std::basic_ostream<T,U> &out ,const V &ip)
-{
-	for(const auto &i:ip)
-		out << i;
-	
-	return out;
-}
 
 class Bfexception final: public std::exception
 {
@@ -193,17 +185,6 @@ class Brainfuck
 		return n;
 	}	
 	
-
-	template <class T>
-	int operator() (Cell &cell,const T &ip)
-	{
-		int n = kernel(cell,ip.begin(),ip.end());
-		
-		if(n>0) throw Bfexception(Bfexception::eid_while);
-		else if(n<0) throw Bfexception(Bfexception::eid_endwhile);
-		
-		return n;
-	}
 };
 	
 	const cdata_t Brainfuck::inst[] = "><+-.,[]";

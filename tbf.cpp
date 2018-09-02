@@ -8,6 +8,8 @@
 #include "bf.hpp"
 #include "bfhelp.hpp"
 
+#define COL 64
+
 using num_t = cdata_t;
 
 using factor_t = std::pair<num_t,num_t>;
@@ -128,6 +130,19 @@ static ip_t it2bf(T i,T j, Cell &cell)
 	return ip;
 }
 
+static unsigned int printip(std::ostream &out,const ip_t &ip,unsigned int ccol,unsigned int col)
+{
+	for(const auto &i:ip)
+	{
+		out << i;
+		
+		ccol=(ccol+1)%col;
+		
+		if(!ccol) out << std::endl;
+	}
+	
+	return ccol;
+}
 
 int main(int argc , const char *argv[])
 {
@@ -168,10 +183,12 @@ std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 Cell cell;
 std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 
+unsigned int ccol = 0;
+
 	do
 	{
 		fin.read(buff.get(),BSIZE);
-		out << it2bf(buff.get(),buff.get()+fin.gcount(),cell);
+		ccol=printip(out,it2bf(buff.get(),buff.get()+fin.gcount(),cell),ccol,COL);
 	}while(fin.gcount()>=BSIZE);
 
 
