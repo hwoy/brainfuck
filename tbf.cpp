@@ -9,7 +9,7 @@
 #include "bfhelp.hpp"
 
 
-using num_t = cdata_t;
+using num_t = int;
 
 using factor_t = std::pair<num_t,num_t>;
 
@@ -18,8 +18,6 @@ using listfactor_t = std::vector<factor_t>;
 static listfactor_t factor(num_t n)
 {
 	listfactor_t vec;
-	
-	if(n<=1) return listfactor_t{std::make_pair(n,n)};
 	
 	for(num_t i=1;i<= (n/2)+1 ;++i)
 	{
@@ -51,9 +49,8 @@ static bool isprime(num_t n)
 
 static num_t findfactor(num_t n)
 {
-	if(n<=2) return n;
 		
-	while(isprime(n)) n--;
+	while(isprime(n) && (n>3)) --n;
 	
 	return n;
 }
@@ -111,7 +108,7 @@ static ip_t a2bfB(num_t n, Cell &cell)
 
 static ip_t a2bf(num_t n, Cell &cell)
 {
-	if( ((n>*cell)&&((n-*cell)<=11)) || ((n<=*cell)&&((*cell-n)<=11)) ) return a2bfB(n,cell);
+	//if( ((n>*cell)&&((n-*cell)<=11)) || ((n<=*cell)&&((*cell-n)<=11)) ) return a2bfB(n,cell);
 	
 	return a2bfA(n,cell);
 }
