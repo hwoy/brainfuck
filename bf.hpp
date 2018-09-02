@@ -115,10 +115,12 @@ class Cell: protected std::unique_ptr<cdata_t[]>
 
 class Brainfuck
 {
+	protected:
+	
 	std::ostream out;
 
 	template <class T>
-	static std::pair<T,int> fn(int n, T i, T j)
+	static std::pair<T,int> openbracket(T i, T j,int n=1)
 	{
 		while(n && i!=j)
 		{
@@ -132,7 +134,7 @@ class Brainfuck
 	}
 
 	template <class T>
-	static std::pair<T,int> fp(int n, T i, T j)
+	static std::pair<T,int> closebracket(T i, T j,int n=-1)
 	{
 		while(n && i!=j)
 		{
@@ -171,11 +173,11 @@ class Brainfuck
 				
 				case '[': 
 					if (*cell == 0)
-						std::tie(i,n) =fn(1,++i,end);
+						std::tie(i,n) =openbracket(++i,end);
 
 					break;
 					
-				case ']': std::tie(i,n) =fp(-1,--i,begin);
+				case ']': std::tie(i,n) =closebracket(--i,begin);
 					continue;
 			}
 			

@@ -30,3 +30,5 @@ static void usage(const char *pname,const char *str)
 #define BSIZE (4*1024)
 
 #define COL (64*2)
+
+#define NCELL 2

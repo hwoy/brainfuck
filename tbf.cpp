@@ -177,7 +177,7 @@ if(argc > 2)
 
 std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
-Cell cell;
+Cell cell(NCELL);
 std::unique_ptr<cdata_t[]> buff(new cdata_t[BSIZE+1]);
 
 unsigned int ccol = 0;
