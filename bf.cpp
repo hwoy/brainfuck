@@ -5,7 +5,7 @@
 #include "bf.hpp"
 #include "bfhelp.hpp"
 
-static bool elem(cdata_t ch, const cdata_t *inst)
+static bool elem(byte_t ch, const byte_t *inst)
 {
 	while(*inst)
 		if(ch==*inst++) return true;
@@ -16,7 +16,7 @@ static bool elem(cdata_t ch, const cdata_t *inst)
 static unsigned int bracket(std::istream &fin,ip_t &ip)
 {
 	unsigned int n=1;
-	cdata_t data;
+	byte_t data;
 			
 	while(fin.read(&data,1), fin.gcount()>=1)
 		{
@@ -70,7 +70,7 @@ try{
 	Cell cell;
 	Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 	ip_t ip;
-	cdata_t data;
+	byte_t data;
 	
 	while(fin.read(&data,1), fin.gcount()>=1)
 	{

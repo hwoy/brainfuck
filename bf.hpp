@@ -7,8 +7,8 @@
 #include <exception>
 #include <vector>
 
-using cdata_t = char;
-using ip_t = std::vector<cdata_t>;
+using byte_t = char;
+using ip_t = std::vector<byte_t>;
 
 
 class Bfexception final: public std::exception
@@ -46,11 +46,11 @@ const char *Bfexception::exc[]={
 	"] must be begin with [. Please check your code.",
 nullptr};
 
-class Cell: protected std::unique_ptr<cdata_t[]>
+class Cell: protected std::unique_ptr<byte_t[]>
 {
 	protected:
 	
-	cdata_t *ptr;
+	byte_t *ptr;
 	std::size_t length;
 	
 	public:
@@ -62,7 +62,7 @@ class Cell: protected std::unique_ptr<cdata_t[]>
 	
 	void setcell(std::size_t s)
 	{
-		reset(new cdata_t[s]);
+		reset(new byte_t[s]);
 		ptr=get();
 		length=s;
 		
@@ -77,34 +77,34 @@ class Cell: protected std::unique_ptr<cdata_t[]>
 		length=0;
 	}
 	
-	const cdata_t * const getptr() const {return ptr;}
+	const byte_t * const getptr() const {return ptr;}
 	
 	std::size_t getlength() const {return length;}
 	
-	cdata_t * const operator ++ () 
+	byte_t * const operator ++ () 
 	{
 		if(ptr+1>=get()+length) throw Bfexception(Bfexception::eid_incptr);
 		
 		return ++ptr;
 	}
 	
-	cdata_t * const operator -- () 
+	byte_t * const operator -- () 
 	{
 		if(ptr-1<get()) throw Bfexception(Bfexception::eid_decptr);
 		
 		return --ptr;
 	}
 	
-	cdata_t & operator * () const {return *ptr;}
+	byte_t & operator * () const {return *ptr;}
 	
-	cdata_t * const operator + (std::size_t n) const 
+	byte_t * const operator + (std::size_t n) const 
 	{
 		if(ptr+n>=get()+length) throw Bfexception(Bfexception::eid_addptr);
 		
 		return (ptr+n);
 	}
 	
-	cdata_t * const operator - (std::size_t n) const 
+	byte_t * const operator - (std::size_t n) const 
 	{
 		if(ptr-n<get()) throw Bfexception(Bfexception::eid_subptr);
 		
@@ -148,7 +148,7 @@ class Brainfuck
 	}
 	
 	public:
-	static const cdata_t inst[];
+	static const byte_t inst[];
 	
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
 
@@ -189,6 +189,6 @@ class Brainfuck
 	
 };
 	
-	const cdata_t Brainfuck::inst[] = "><+-.,[]";
+	const byte_t Brainfuck::inst[] = "><+-.,[]";
 
 #endif
