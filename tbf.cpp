@@ -51,6 +51,11 @@ static num_t findfactor(num_t n)
 	return n;
 }
 
+static void appendip(ip_t &ip,const std::string &str)
+{
+	ip.insert(ip.end(),str.begin(),str.end());
+}
+
 static ip_t a2bfA(num_t n, Cell &cell)
 {
 	num_t a,b;
@@ -60,29 +65,23 @@ static ip_t a2bfA(num_t n, Cell &cell)
 	
 	(a>*cell)? ip.insert(ip.end(),a-(*cell),'+') : ip.insert(ip.end(),(*cell)-a,'-') ;
 	
-	{
-		const std::string str=" [> ";
-		ip.insert(ip.end(),str.begin(),str.end());
-	}
+
+	appendip(ip," [> ");
 	
 	*cell=0;
 	++cell;
 	
 	(n>*cell)? ip.insert(ip.end(),b,'+') : ip.insert(ip.end(),b,'-') ;
 	
-	{
-		const std::string str=" <-] > ";
-		ip.insert(ip.end(),str.begin(),str.end());
-	}
+	
+	appendip(ip," <-] > ");
 	
 	
 	if( (n>*cell) && ((*cell+a*b)<n) ) ip.insert(ip.end(),n-(*cell+a*b),'+')  ;
 	else if((*cell>=n) && ((n+a*b)<*cell) ) ip.insert(ip.end(),*cell-(n+a*b),'-')  ;
 	
-	{
-		const std::string str=" . < ";
-		ip.insert(ip.end(),str.begin(),str.end());
-	}
+	
+	appendip(ip," . < ");
 
 	*cell=n;
 	--cell;
@@ -94,19 +93,13 @@ static ip_t a2bfB(num_t n, Cell &cell)
 {
 	ip_t ip;
 	
-	{
-		const std::string str=" > ";
-		ip.insert(ip.end(),str.begin(),str.end());
-	}
+	appendip(ip," > ");
 	
 	++cell;
 	(n>*cell) ? ip.insert(ip.end(),n-*cell,'+') : ip.insert(ip.end(),*cell-n,'-');
 	
 
-	{
-		const std::string str=" . < ";
-		ip.insert(ip.end(),str.begin(),str.end());
-	}	
+	appendip(ip," . < ");	
 	
 	*cell=n;
 	--cell;
