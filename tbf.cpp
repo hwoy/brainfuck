@@ -108,7 +108,7 @@ static ip_t a2bfB(num_t n, Cell &cell)
 
 static ip_t a2bf(num_t n, Cell &cell)
 {
-	//if( ((n>*cell)&&((n-*cell)<=11)) || ((n<=*cell)&&((*cell-n)<=11)) ) return a2bfB(n,cell);
+	if( ((n>*cell)&&((n-*cell)<=11)) || ((n<=*cell)&&((*cell-n)<=11)) ) return a2bfB(n,cell);
 	
 	return a2bfA(n,cell);
 }
