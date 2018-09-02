@@ -114,7 +114,7 @@ static ip_t a2bf(num_t n, Cell &cell)
 }
 
 template <class T>
-static ip_t it2bf(T i,T j, Cell &cell)
+static const ip_t it2bf(T i,T j, Cell &cell)
 {
 	ip_t ip;
 	
