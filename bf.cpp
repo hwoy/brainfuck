@@ -14,7 +14,7 @@ static bool elem(byte_t ch, const byte_t *inst)
 	return false;
 }
 
-static unsigned int bracket(std::istream &fin,ip_t &ip, std::size_t looplimit=(64*1024))
+static unsigned int bracket(std::istream &fin,ip_t &ip, std::size_t looplimit=(LOOPLIMIT*1024))
 {
 	unsigned int n=1;
 	byte_t data;
@@ -72,7 +72,7 @@ if(argc > 2)
 
 
 try{
-	Cell cell;
+	Cell cell(BFCELL);
 	Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 	ip_t ip;
 	byte_t data;

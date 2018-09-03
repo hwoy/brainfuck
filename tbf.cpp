@@ -177,16 +177,24 @@ if(argc > 2)
 
 std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
-Cell cell(NCELL);
+Cell cell(TBFCELL);
 std::unique_ptr<byte_t[]> buff(new byte_t[BSIZE+1]);
 
 unsigned int ccol = 0;
 
+try{
+	
 	do
 	{
 		fin.read(buff.get(),BSIZE);
 		ccol=printip(out,it2bf(buff.get(),buff.get()+fin.gcount(),cell),ccol,COL);
 	}while(fin.gcount()>=BSIZE);
+	
+}catch(const std::exception &e)
+{
+	std::cerr << std::endl << "Exception:"  << std::endl
+			  << e.what() << std::endl;
+}
 
 
 

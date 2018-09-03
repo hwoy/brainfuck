@@ -29,6 +29,18 @@ static void usage(const char *pname,const char *str)
 
 #define BSIZE (4*1024)
 
+#ifndef COL
 #define COL (64*2)
+#endif
 
-#define NCELL 2
+#ifndef LOOPLIMIT
+#define LOOPLIMIT 64
+#endif
+
+#ifndef BFCELL
+#define BFCELL 512
+#endif
+
+#ifndef TBFCELL
+#define TBFCELL 2
+#endif
