@@ -23,8 +23,8 @@ static void usage(const char *pname,const char *str)
 	auto gpname=grappath(pname);
 	
 	std::cout << std::endl << gpname << " is " << str << std::endl << std::endl
-						   << gpname << " input-file" << std::endl
-						   << gpname << " input-file output-file" << std::endl << std::endl;
+						  << gpname << " input-file" << std::endl
+						  << gpname << " input-file output-file" << std::endl << std::endl;
 }
 
 #define BSIZE (4*1024)
