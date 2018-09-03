@@ -5,6 +5,7 @@
 #include "bf.hpp"
 #include "bfhelp.hpp"
 
+
 static bool elem(byte_t ch, const byte_t *inst)
 {
 	while(*inst)
@@ -13,19 +14,23 @@ static bool elem(byte_t ch, const byte_t *inst)
 	return false;
 }
 
-static unsigned int bracket(std::istream &fin,ip_t &ip)
+static unsigned int bracket(std::istream &fin,ip_t &ip, std::size_t looplimit=(64*1024))
 {
 	unsigned int n=1;
 	byte_t data;
+	auto limit = looplimit;
 			
 	while(fin.read(&data,1), fin.gcount()>=1)
 		{
+			if(!elem(data,Brainfuck::inst)) continue;
+			
 			if(data=='[') ++n;
 			else if(data==']') --n;
 				
 			ip.push_back(data);
-				
+			
 			if(!n) break;
+			if(!(--limit)) throw Bfexception("Large [] loop Over the limit:" + std::to_string(looplimit) + " ,Please check your code.");
 		}
 		
 	return n;

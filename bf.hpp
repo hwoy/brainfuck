@@ -6,6 +6,7 @@
 #include <memory>
 #include <exception>
 #include <vector>
+#include <string>
 
 using byte_t = char;
 using ip_t = std::vector<byte_t>;
@@ -13,16 +14,17 @@ using ip_t = std::vector<byte_t>;
 
 class Bfexception final: public std::exception
 {
-	const char *msg;
+	const std::string msg;
 	unsigned int id;
 	
 	public:
 	Bfexception(std::size_t eid):msg(exc[eid]),id(eid) {}
+	Bfexception(const std::string &msg):msg(msg),id(-1U) {}
 	~Bfexception(){}
 	
 	const char* what() const noexcept override
 	{
-		return msg;
+		return msg.c_str();
 	}
 	
 	static const char *exc[];
