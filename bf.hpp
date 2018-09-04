@@ -15,10 +15,10 @@ using ip_t = std::vector<byte_t>;
 class Bfexception final: public std::exception
 {
 	const std::string msg;
-	unsigned int id;
+	const unsigned int id;
 	
 	public:
-	Bfexception(std::size_t eid):msg(exc[eid]),id(eid) {}
+	Bfexception(const std::size_t eid):msg(exc[eid]),id(eid) {}
 	Bfexception(const std::string &msg):msg(msg),id(-1U) {}
 	~Bfexception(){}
 	
