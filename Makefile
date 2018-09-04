@@ -41,4 +41,4 @@ $(TBF)-r: tbf.cpp bf.hpp
 		$(CXX) -o $(TBF)-r $(RELEASEFLAGS) $(TBFFLAGS) tbf.cpp		
 		
 clean:
-	rm -rf *.exe *.o  *.bf $(BF) $(TBF)
+	rm -rf *.exe *.o  *.bf $(BF) $(TBF) $(BF)-r $(TBF)-r
