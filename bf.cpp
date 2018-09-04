@@ -79,14 +79,14 @@ try{
 	
 	while(fin.read(&data,1), fin.gcount()>=1)
 	{
-		if(!elem(data,Brainfuck::inst)) continue;
+		if(!elem(data,Brainfuck::inst))	continue;
 			
 		ip.clear();
 		ip.push_back(data);
 		
-		if(data=='[' && bracket(fin,ip))  throw Bfexception(Bfexception::eid_while);
+		if(data=='[' && bracket(fin,ip))	throw Bfexception(Bfexception::eid_while);
 		
-		else if(data==']') 				 throw Bfexception(Bfexception::eid_endwhile);
+		else if(data==']')				throw Bfexception(Bfexception::eid_endwhile);
 		
 		bf.kernel(cell,ip.begin(),ip.end());
 	}
