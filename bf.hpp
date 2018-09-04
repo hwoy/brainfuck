@@ -177,11 +177,11 @@ class Brainfuck
 				
 				case '[': 
 					if (*cell == 0)
-						std::tie(i,n) =openbracket(++i,end);
+						std::tie(i,n) = openbracket(++i,end);
 
 					break;
 					
-				case ']': std::tie(i,n) =closebracket(--i,begin);
+				case ']': std::tie(i,n) = closebracket(--i,begin);
 					continue;
 			}
 			

@@ -15,6 +15,8 @@ using factor_t = std::pair<num_t,num_t>;
 
 using listfactor_t = std::vector<factor_t>;
 
+
+
 static listfactor_t factor(num_t n)
 {
 	listfactor_t vec;
@@ -192,8 +194,8 @@ try{
 	
 }catch(const std::exception &e)
 {
-	std::cerr << std::endl << "Exception:"  << std::endl
-			  << e.what() << std::endl;
+	std::cerr	<< std::endl	<< "Exception:"	<< std::endl
+				<< e.what()	<< std::endl;
 }
 
 
