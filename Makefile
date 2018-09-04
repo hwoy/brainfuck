@@ -14,7 +14,6 @@ BFCELL=512
 TBFCELL=2
 
 BFFLAGS = -DLOOPLIMIT=$(LOOPLIMIT) -DBFCELL=$(BFCELL)
-
 TBFFLAGS = -DCOL=$(COL) -DTBFCELL=$(TBFCELL)
 
 DEBUGFLAGS = -g -Wall -std=$(STD) -pedantic
@@ -42,4 +41,4 @@ $(TBF)-r: tbf.cpp bf.hpp
 		$(CXX) -o $(TBF)-r $(RELEASEFLAGS) $(TBFFLAGS) tbf.cpp		
 		
 clean:
-	rm -rf *.exe *.o  *.bf
+	rm -rf *.exe *.o  *.bf $(BF) $(TBF)
