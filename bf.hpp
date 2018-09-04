@@ -19,7 +19,7 @@ class Bfexception final: public std::exception
 	
 	public:
 	Bfexception(const std::size_t eid):msg(exc[eid]),id(eid) {}
-	Bfexception(const std::string &msg):msg(msg),id(-1U) {}
+	Bfexception(std::string &&msg):msg(msg),id(-1U) {}
 	
 	
 	~Bfexception() override {}
