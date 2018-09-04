@@ -3,7 +3,7 @@ TBF = tbf
 
 CXX = g++
 
-STD =c++11
+STD =c++11 -pedantic
 
 COL=96
 
@@ -16,8 +16,8 @@ TBFCELL=2
 BFFLAGS = -DLOOPLIMIT=$(LOOPLIMIT) -DBFCELL=$(BFCELL)
 TBFFLAGS = -DCOL=$(COL) -DTBFCELL=$(TBFCELL)
 
-DEBUGFLAGS = -g -Wall -std=$(STD) -pedantic
-RELEASEFLAGS = -O2 -Wall -std=$(STD) -pedantic
+DEBUGFLAGS = -g -Wall -std=$(STD)
+RELEASEFLAGS = -O2 -Wall -std=$(STD)
 
 CXXFLAGS = $(DEBUGFLAGS)
 
