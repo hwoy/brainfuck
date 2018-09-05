@@ -6,13 +6,11 @@
 #include "bfhelp.hpp"
 
 
-static bool elem(byte_t ch, const byte_t *inst)
+static constexpr bool elem(byte_t ch, const byte_t * const inst)
 {
-	while(*inst)
-		if(ch==*inst++) return true;
-
-	return false;
+	return (*inst)? ( (ch==*inst)? true : elem(ch,inst+1) ) : false;
 }
+
 
 static unsigned int bracket(std::istream &fin,ip_t &ip, std::size_t looplimit=(LOOPLIMIT*1024))
 {
