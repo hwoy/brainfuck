@@ -17,13 +17,13 @@ static void showerr (std::size_t id,const char *err[],const char *str)
 }
 
 
-static void usage(const char *pname,const char *str)
+static void usage(const char *path,const char *str)
 {
-	auto gpname=path::grap(pname);
+	auto gpath=path::grap(path);
 	
-	std::cout << std::endl << gpname << " is " << str << std::endl << std::endl
-						  << gpname << " input-file" << std::endl
-						  << gpname << " input-file output-file" << std::endl << std::endl;
+	std::cout << std::endl << gpath << " is " << str << std::endl << std::endl
+						  << gpath << " input-file" << std::endl
+						  << gpath << " input-file output-file" << std::endl << std::endl;
 }
 
 static const char *err[] = {"Can not access INPUT FILE: ","Can not access OUTPUT FILE: ",nullptr};
