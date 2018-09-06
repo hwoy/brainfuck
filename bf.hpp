@@ -157,7 +157,7 @@ class Brainfuck
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
 
 	template <class T>
-	int kernel (Cell &cell,T begin, T end,int n=0)
+	int eval (Cell &cell,T begin, T end,int n=0)
 	{
 		auto i=begin;
 		

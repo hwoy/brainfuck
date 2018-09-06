@@ -86,7 +86,7 @@ try{
 		
 		else if(data==']')				throw Bfexception(Bfexception::eid_endwhile);
 		
-		bf.kernel(cell,ip.begin(),ip.end());
+		bf.eval(cell,ip.begin(),ip.end());
 	}
 
 }catch(const std::exception &e)
