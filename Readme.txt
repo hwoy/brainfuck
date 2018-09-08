@@ -1,6 +1,6 @@
  [
  
- ************   Readme can be decoded by "bf Readme.txt" *************
+ ************   Readme can be decoded by "bf README.txt" *************
 				Thanks you !!!!!!!!!!
 				FB: watt.duean
 				EMAIL: bosskillerz@gmail.com

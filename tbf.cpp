@@ -152,7 +152,7 @@ if(argc<=1)
 	return 0;
 }
 
-std::ofstream fout;
+
 std::ifstream fin;
 
 
@@ -165,6 +165,8 @@ if(argc > 1)
 		return 1;
 	}
 }
+
+std::ofstream fout;
 
 if(argc > 2)
 {
