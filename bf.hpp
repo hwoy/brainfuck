@@ -183,10 +183,8 @@ class Brainfuck
 					
 				case ']':
 						if (*tape)
-						{
 							std::tie(ip,n) = closebracket(--ip,begin);
-							continue;
-						}
+
 						break;
 			}
 			
