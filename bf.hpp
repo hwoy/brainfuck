@@ -176,12 +176,13 @@ class Brainfuck
 				case ',': *tape = std::cin.get(); break;
 				
 				case '[': 
-					if (*tape == 0)
-						std::tie(i,n) = openbracket(++i,end);
+						if (*tape == 0)
+							std::tie(i,n) = openbracket(++i,end);
 
-					break;
+						break;
 					
-				case ']': if (*tape) 
+				case ']':
+						if (*tape)
 						{
 							std::tie(i,n) = closebracket(--i,begin);
 							continue;
