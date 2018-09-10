@@ -181,8 +181,12 @@ class Brainfuck
 
 					break;
 					
-				case ']': std::tie(i,n) = closebracket(--i,begin);
-					continue;
+				case ']': if (*cell) 
+						{
+							std::tie(i,n) = closebracket(--i,begin);
+							continue;
+						}
+						break;
 			}
 			
 			if(i!=end) ++i;
