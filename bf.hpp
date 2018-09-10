@@ -42,15 +42,15 @@ class Bfexception final: public std::exception
 };
 
 const char *Bfexception::exc[]={
-	"Can not increase PTR Cell. Please increase mem Cell.",
-	"Can not decrease PTR Cell. Please check your code.",
-	"Can not Addition PTR Cell. Please increase mem Cell.",
-	"Can not Subtraction PTR Cell. Please check your code.",
+	"Can not increase PTR Tape. Please increase mem Tape.",
+	"Can not decrease PTR Tape. Please check your code.",
+	"Can not Addition PTR Tape. Please increase mem Tape.",
+	"Can not Subtraction PTR Tape. Please check your code.",
 	"[ must be end with ]. Please check your code.",
 	"] must be begin with [. Please check your code.",
 nullptr};
 
-class Cell: protected std::unique_ptr<byte_t[]>
+class Tape: protected std::unique_ptr<byte_t[]>
 {
 	protected:
 	
@@ -59,12 +59,12 @@ class Cell: protected std::unique_ptr<byte_t[]>
 	
 	public:
 	
-	Cell(std::size_t s=512)
+	Tape(std::size_t s=512)
 	{
-		setcell(s);
+		settape(s);
 	}
 	
-	void setcell(std::size_t s)
+	void settape(std::size_t s)
 	{
 		reset(new byte_t[s]);
 		ptr=get();
@@ -74,7 +74,7 @@ class Cell: protected std::unique_ptr<byte_t[]>
 			get()[i] = 0;	
 	}
 	
-	void destroycell(void)
+	void destroytape(void)
 	{
 		release();
 		ptr=nullptr;
@@ -157,7 +157,7 @@ class Brainfuck
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
 
 	template <class T>
-	int eval (Cell &cell,T begin, T end,int n=0)
+	int eval (Tape &tape,T begin, T end,int n=0)
 	{
 		auto i=begin;
 		
@@ -166,22 +166,22 @@ class Brainfuck
 		{
 			switch (*i)
 			{
-				case '>': ++cell;  break;
-				case '<': --cell;  break;
+				case '>': ++tape;  break;
+				case '<': --tape;  break;
 				
-				case '+': ++(*cell); break;
-				case '-': --(*cell); break;
+				case '+': ++(*tape); break;
+				case '-': --(*tape); break;
 
-				case '.': out.write(cell.getptr(),1); out.flush(); break;
-				case ',': *cell = std::cin.get(); break;
+				case '.': out.write(tape.getptr(),1); out.flush(); break;
+				case ',': *tape = std::cin.get(); break;
 				
 				case '[': 
-					if (*cell == 0)
+					if (*tape == 0)
 						std::tie(i,n) = openbracket(++i,end);
 
 					break;
 					
-				case ']': if (*cell) 
+				case ']': if (*tape) 
 						{
 							std::tie(i,n) = closebracket(--i,begin);
 							continue;

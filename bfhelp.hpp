@@ -43,10 +43,10 @@ enum{
 #define LOOPLIMIT 64
 #endif
 
-#ifndef BFCELL
-#define BFCELL 512
+#ifndef BFTAPE
+#define BFTAPE 512
 #endif
 
-#ifndef TBFCELL
-#define TBFCELL 2
+#ifndef TBFTAPE
+#define TBFTAPE 2
 #endif

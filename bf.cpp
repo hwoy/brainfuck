@@ -71,7 +71,7 @@ if(argc > 2)
 
 
 try{
-	Cell cell(BFCELL);
+	Tape tape(BFTAPE);
 	Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 	ip_t ip;
 	byte_t data;
@@ -87,7 +87,7 @@ try{
 		
 		else if(data==']')				throw Bfexception(Bfexception::eid_endwhile);
 		
-		bf.eval(cell,ip.begin(),ip.end());
+		bf.eval(tape,ip.begin(),ip.end());
 	}
 
 }catch(const std::exception &e)

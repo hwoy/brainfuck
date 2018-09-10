@@ -62,45 +62,45 @@ static void appendip(ip_t &ip,const std::string &str)
 	ip.insert(ip.end(),str.begin(),str.end());
 }
 
-static ip_t a2bfA(num_t n, Cell &cell)
+static ip_t a2bfA(num_t n, Tape &tape)
 {
 	ip_t ip;
 	
 	num_t a,b;
-	num_t m= n>*(cell) ? n-*(cell) : *(cell)-n;
+	num_t m= n>*(tape) ? n-*(tape) : *(tape)-n;
 	std::tie(a,b) = minfactor(factor(findfactor(m)));
 	
 	
-	appendip(ip,">");++cell;
+	appendip(ip,">");++tape;
 	
-	(a>*cell)? ip.insert(ip.end(),a-(*cell),'+') : ip.insert(ip.end(),(*cell)-a,'-') ;
+	(a>*tape)? ip.insert(ip.end(),a-(*tape),'+') : ip.insert(ip.end(),(*tape)-a,'-') ;
 	
-	*cell=0;
+	*tape=0;
 	
-	appendip(ip,"[<");--cell;
+	appendip(ip,"[<");--tape;
 	
-	(n>*cell)? ip.insert(ip.end(),b,'+') : ip.insert(ip.end(),b,'-') ;
+	(n>*tape)? ip.insert(ip.end(),b,'+') : ip.insert(ip.end(),b,'-') ;
 	
 	appendip(ip,">-]<");
 	
 	
 	
-	if( (n>*cell) && ((*cell+a*b)<n) ) ip.insert(ip.end(),n-(*cell+a*b),'+')  ;
-	else if((*cell>=n) && ((n+a*b)<*cell) ) ip.insert(ip.end(),*cell-(n+a*b),'-')  ;
+	if( (n>*tape) && ((*tape+a*b)<n) ) ip.insert(ip.end(),n-(*tape+a*b),'+')  ;
+	else if((*tape>=n) && ((n+a*b)<*tape) ) ip.insert(ip.end(),*tape-(n+a*b),'-')  ;
 	
-	*cell=n;
+	*tape=n;
 	appendip(ip,".");
 	
 	return ip;
 }
 
-static ip_t a2bfB(num_t n, Cell &cell)
+static ip_t a2bfB(num_t n, Tape &tape)
 {
 	ip_t ip;
 	
-	(n>*cell) ? ip.insert(ip.end(),n-*cell,'+') : ip.insert(ip.end(),*cell-n,'-');
+	(n>*tape) ? ip.insert(ip.end(),n-*tape,'+') : ip.insert(ip.end(),*tape-n,'-');
 	
-	*cell=n;
+	*tape=n;
 
 	appendip(ip,".");	
 	
@@ -108,20 +108,20 @@ static ip_t a2bfB(num_t n, Cell &cell)
 	return ip;
 }
 
-static ip_t a2bf(num_t n, Cell &cell)
+static ip_t a2bf(num_t n, Tape &tape)
 {
-	return (( ((n>*cell)&&((n-*cell)<=11)) || ((n<=*cell)&&((*cell-n)<=11)) ) ? a2bfB : a2bfA) (n,cell);
+	return (( ((n>*tape)&&((n-*tape)<=11)) || ((n<=*tape)&&((*tape-n)<=11)) ) ? a2bfB : a2bfA) (n,tape);
 	
 }
 
 template <class T>
-static const ip_t it2bf(T i,T j, Cell &cell)
+static const ip_t it2bf(T i,T j, Tape &tape)
 {
 	ip_t ip;
 	
 	for(;i != j; ++i)
 	{
-		auto ip2 = a2bf(*i,cell);
+		auto ip2 = a2bf(*i,tape);
 		ip.insert(ip.end(),ip2.begin(),ip2.end());
 	}
 	
@@ -180,7 +180,7 @@ if(argc > 2)
 
 std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
-Cell cell(TBFCELL);
+Tape tape(TBFTAPE);
 std::unique_ptr<byte_t[]> buff(new byte_t[BSIZE+1]);
 
 unsigned int ccol = 0;
@@ -190,7 +190,7 @@ try{
 	do
 	{
 		fin.read(buff.get(),BSIZE);
-		ccol=printip(out,it2bf(buff.get(),buff.get()+fin.gcount(),cell),ccol,COL);
+		ccol=printip(out,it2bf(buff.get(),buff.get()+fin.gcount(),tape),ccol,COL);
 	}while(fin.gcount()>=BSIZE);
 	
 }catch(const std::exception &e)
