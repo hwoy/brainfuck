@@ -159,12 +159,12 @@ class Brainfuck
 	template <class T>
 	int eval (Tape &tape,T begin, T end,int n=0)
 	{
-		auto i=begin;
+		auto ip=begin;
 		
 		
-		while(i != end)
+		while(ip != end)
 		{
-			switch (*i)
+			switch (*ip)
 			{
 				case '>': ++tape;  break;
 				case '<': --tape;  break;
@@ -177,20 +177,20 @@ class Brainfuck
 				
 				case '[': 
 						if (*tape == 0)
-							std::tie(i,n) = openbracket(++i,end);
+							std::tie(ip,n) = openbracket(++ip,end);
 
 						break;
 					
 				case ']':
 						if (*tape)
 						{
-							std::tie(i,n) = closebracket(--i,begin);
+							std::tie(ip,n) = closebracket(--ip,begin);
 							continue;
 						}
 						break;
 			}
 			
-			if(i!=end) ++i;
+			if(ip!=end) ++ip;
 		}
 		
 		return n;
