@@ -176,7 +176,7 @@ class Brainfuck
 				case ',': *tape = std::cin.get(); break;
 				
 				case '[': 
-						if (*tape == 0)
+						if (!*tape)
 							std::tie(ip,n) = openbracket(++ip,end);
 
 						break;
