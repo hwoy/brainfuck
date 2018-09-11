@@ -81,6 +81,11 @@ class Tape: protected std::unique_ptr<byte_t[]>
 		length=0;
 	}
 	
+	const byte_t * const getbaseptr() const
+	{
+		return get();
+	}
+	
 	const byte_t * const getptr() const {return ptr;}
 	
 	std::size_t getlength() const {return length;}
@@ -113,8 +118,7 @@ class Tape: protected std::unique_ptr<byte_t[]>
 		if(ptr-n<get()) throw Bfexception(Bfexception::eid_subptr);
 		
 		return (ptr-n);
-	}
-	
+	}	
 };
 
 class Brainfuck
@@ -166,26 +170,19 @@ class Brainfuck
 		{
 			switch (*ip)
 			{
-				case '>': ++tape;  break;
-				case '<': --tape;  break;
+				case '>': ++tape;  													break;
+				case '<': --tape;  													break;
 				
-				case '+': ++(*tape); break;
-				case '-': --(*tape); break;
+				case '+': ++(*tape);													break;
+				case '-': --(*tape);													break;
 
-				case '.': out.write(tape.getptr(),1); out.flush(); break;
-				case ',': *tape = std::cin.get(); break;
+				case '.': out.write(tape.getptr(),1); out.flush(); 					break;
+				case ',': *tape = std::cin.get();									break;
 				
-				case '[': 
-						if (!*tape)
-							std::tie(ip,n) = openbracket(++ip,end);
-
-						break;
-					
-				case ']':
-						if (*tape)
-							std::tie(ip,n) = closebracket(--ip,begin);
-
-						break;
+				case '[': if (!*tape)	std::tie(ip,n) = openbracket(++ip,end);		break;	
+				case ']': if (*tape)		std::tie(ip,n) = closebracket(--ip,begin);	break;
+				
+				default:															break;
 			}
 			
 			if(ip!=end) ++ip;

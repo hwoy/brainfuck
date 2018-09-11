@@ -108,9 +108,42 @@ static ip_t a2bfB(num_t n, Tape &tape)
 	return ip;
 }
 
+static ip_t movetapeptr(Tape &tape,std::size_t index)
+{
+	auto diff = (tape.getbaseptr()+index)-tape.getptr();
+	ip_t ip;
+	
+	if(diff>0)	for(;diff;--diff,++tape) ip.push_back('>');
+	
+	else		for(;diff;++diff,--tape) ip.push_back('<');
+	
+	return ip;
+}
+
+static ip_t movea2bf(num_t n,Tape &tape,std::size_t index)
+{
+	ip_t ip = movetapeptr(tape,index);
+	
+	auto ip2=(( ((n>*tape)&&((n-*tape)<=11)) || ((n<=*tape)&&((*tape-n)<=11)) ) ? a2bfB : a2bfA) (n,tape);
+	
+	ip.insert(ip.end(),ip2.begin(),ip2.end());
+	
+	return ip;
+}
+
 static ip_t a2bf(num_t n, Tape &tape)
 {
-	return (( ((n>*tape)&&((n-*tape)<=11)) || ((n<=*tape)&&((*tape-n)<=11)) ) ? a2bfB : a2bfA) (n,tape);
+	
+	switch (n)
+	{
+		case 32:	return movea2bf(n,tape,2);	break;
+		
+		case 10:	return movea2bf(n,tape,4);	break;
+		
+		case 13:	return movea2bf(n,tape,6);	break;
+		
+		default: 	return movea2bf(n,tape,0);
+	}
 	
 }
 
