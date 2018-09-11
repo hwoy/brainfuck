@@ -12,10 +12,11 @@ static constexpr bool elem(byte_t ch, const byte_t * const inst)
 }
 
 
-static unsigned int bracket(std::istream &fin,ip_t &ip, std::size_t looplimit=(LOOPLIMIT*1024))
+static unsigned int bracket(std::istream &fin,ip_t &ip)
 {
 	unsigned int n=1;
 	byte_t data;
+	auto looplimit = ip.capacity()-ip.size();
 	auto limit = looplimit;
 			
 	while(fin.read(&data,1), fin.gcount()>=1)
