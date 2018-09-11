@@ -16,8 +16,8 @@ static unsigned int bracket(std::istream &fin,ip_t &ip)
 {
 	unsigned int n=1;
 	byte_t data;
-	auto looplimit = ip.capacity()-ip.size();
-	auto limit = looplimit;
+	auto looplimit = ip.capacity();
+	auto limit = looplimit-ip.size();
 			
 	while(fin.read(&data,1), fin.gcount()>=1)
 		{
