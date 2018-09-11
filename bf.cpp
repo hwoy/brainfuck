@@ -73,7 +73,7 @@ if(argc > 2)
 try{
 	Tape tape(BFTAPE);
 	Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
-	ip_t ip;
+	ip_t ip(LOOPLIMIT*1024);
 	byte_t data;
 	
 	while(fin.read(&data,1), fin.gcount()>=1)
