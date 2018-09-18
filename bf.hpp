@@ -8,8 +8,16 @@
 #include <vector>
 #include <string>
 
-using byte_t = char;
-using ip_t = std::vector<byte_t>;
+#ifndef CELL_T
+
+#define CELL_T char
+
+#endif
+
+using byte_t = CELL_T;
+
+using inst_t = char;
+using ip_t = std::vector<inst_t>;
 
 
 class Bfexception final: public std::exception
@@ -156,7 +164,7 @@ class Brainfuck
 	}
 	
 	public:
-	static const byte_t inst[];
+	static const inst_t inst[];
 	
 	Brainfuck(std::streambuf *rd=std::cout.rdbuf()):out(rd){}
 
@@ -193,6 +201,6 @@ class Brainfuck
 	
 };
 	
-	const byte_t Brainfuck::inst[] = "><+-.,[]";
+	const inst_t Brainfuck::inst[] = "><+-.,[]";
 
 #endif

@@ -214,7 +214,7 @@ if(argc > 2)
 std::ostream out(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 
 Tape tape(TBFTAPE);
-std::unique_ptr<byte_t[]> buff(new byte_t[BSIZE+1]);
+std::unique_ptr<inst_t[]> buff(new inst_t[BSIZE+1]);
 
 unsigned int ccol = 0;
 

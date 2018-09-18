@@ -6,7 +6,7 @@
 #include "bfhelp.hpp"
 
 
-static constexpr bool elem(byte_t ch, const byte_t * const inst)
+static constexpr bool elem(inst_t ch, const inst_t * const inst)
 {
 	return (*inst)? ( (ch==*inst)? true : elem(ch,inst+1) ) : false;
 }
@@ -15,7 +15,7 @@ static constexpr bool elem(byte_t ch, const byte_t * const inst)
 static unsigned int bracket(std::istream &fin,ip_t &ip)
 {
 	unsigned int n=1;
-	byte_t data;
+	inst_t data;
 	auto looplimit = ip.capacity();
 	auto limit = looplimit-ip.size();
 			
@@ -75,7 +75,7 @@ try{
 	Tape tape(BFTAPE);
 	Brainfuck bf(argc>2 ? fout.rdbuf() : std::cout.rdbuf() );
 	ip_t ip(LOOPLIMIT*1024);
-	byte_t data;
+	inst_t data;
 	
 	while(fin.read(&data,1), fin.gcount()>=1)
 	{
