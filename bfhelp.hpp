@@ -11,7 +11,7 @@ struct path{
 	}
 };
 
-static void showerr (std::size_t id,const char *err[],const char *str)
+static void showerr (unsigned int id,const char *err[],const char *str)
 {
 	std::cerr << "\nERROR ID " << id  << " : " << err[id] << (str?str:"") << std::endl;
 }
