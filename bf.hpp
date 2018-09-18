@@ -96,6 +96,8 @@ class Tape: protected std::unique_ptr<byte_t[]>
 	
 	const byte_t * const getptr() const {return ptr;}
 	
+	byte_t * const getptr_mutable() const {return ptr;}
+	
 	std::size_t getlength() const {return length;}
 	
 	byte_t * const operator ++ () 
@@ -184,8 +186,8 @@ class Brainfuck
 				case '+': ++(*tape);													break;
 				case '-': --(*tape);													break;
 
-				case '.': out.write(tape.getptr(),1); out.flush(); 					break;
-				case ',': *tape = std::cin.get();									break;
+				case '.': out << *reinterpret_cast<const char *>(tape.getptr()); out.flush(); break;
+				case ',': *reinterpret_cast<char *>(tape.getptr_mutable()) = std::cin.get();	 break;
 				
 				case '[': if (!*tape)	std::tie(ip,n) = openbracket(++ip,end);		break;	
 				case ']': if (*tape)		std::tie(ip,n) = closebracket(--ip,begin);	break;
