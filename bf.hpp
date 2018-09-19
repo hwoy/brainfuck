@@ -14,7 +14,7 @@
 
 #endif
 
-using byte_t = CELL_T;
+using cell_t = CELL_T;
 
 using inst_t = char;
 using ip_t = std::vector<inst_t>;
@@ -58,11 +58,11 @@ const char *Bfexception::exc[]={
 	"] must be begin with [. Please check your code.",
 nullptr};
 
-class Tape: protected std::unique_ptr<byte_t[]>
+class Tape: protected std::unique_ptr<cell_t[]>
 {
 	protected:
 	
-	byte_t *ptr;
+	cell_t *ptr;
 	std::size_t length;
 	
 	public:
@@ -74,7 +74,7 @@ class Tape: protected std::unique_ptr<byte_t[]>
 	
 	void settape(std::size_t s)
 	{
-		reset(new byte_t[s]);
+		reset(new cell_t[s]);
 		ptr=get();
 		length=s;
 		
@@ -89,41 +89,41 @@ class Tape: protected std::unique_ptr<byte_t[]>
 		length=0;
 	}
 	
-	const byte_t * const getbaseptr() const
+	const cell_t * const getbaseptr() const
 	{
 		return get();
 	}
 	
-	const byte_t * const getptr() const {return ptr;}
+	const cell_t * const getptr() const {return ptr;}
 	
-	byte_t * const getptr_mutable() const {return ptr;}
+	cell_t * const getptr_mutable() const {return ptr;}
 	
 	std::size_t getlength() const {return length;}
 	
-	byte_t * const operator ++ () 
+	cell_t * const operator ++ () 
 	{
 		if(ptr+1>=get()+length) throw Bfexception(Bfexception::eid_incptr);
 		
 		return ++ptr;
 	}
 	
-	byte_t * const operator -- () 
+	cell_t * const operator -- () 
 	{
 		if(ptr-1<get()) throw Bfexception(Bfexception::eid_decptr);
 		
 		return --ptr;
 	}
 	
-	byte_t & operator * () const {return *ptr;}
+	cell_t & operator * () const {return *ptr;}
 	
-	byte_t * const operator + (std::size_t n) const 
+	cell_t * const operator + (std::size_t n) const 
 	{
 		if(ptr+n>=get()+length) throw Bfexception(Bfexception::eid_addptr);
 		
 		return (ptr+n);
 	}
 	
-	byte_t * const operator - (std::size_t n) const 
+	cell_t * const operator - (std::size_t n) const 
 	{
 		if(ptr-n<get()) throw Bfexception(Bfexception::eid_subptr);
 		
