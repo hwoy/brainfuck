@@ -187,7 +187,7 @@ class Brainfuck
 				case '-': --(*tape);													break;
 
 				case '.': out << static_cast<char>(*tape.getptr()); out.flush(); break;
-				case ',': *tape.getptr_mutable() = static_cast<cell_t>(std::cin.get());	 break;
+				case ',': *tape.getptr_mutable() = std::cin.get();	 break;
 				
 				case '[': if (!*tape)	std::tie(ip,n) = openbracket(++ip,end);		break;	
 				case ']': if (*tape)		std::tie(ip,n) = closebracket(--ip,begin);	break;
