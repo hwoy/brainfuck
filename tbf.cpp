@@ -180,7 +180,7 @@ int main(int argc , const char *argv[])
 
 if(argc<=1)
 {
-	usage(argv[0],"a Text to Brainf**k Encoder.");
+	usage(argv[0],"a Text to Brainf**k Encoder.",TBFTAPE,sizeof(cell_t));
 	return 0;
 }
 

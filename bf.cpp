@@ -41,7 +41,7 @@ int main(int argc , const char *argv[])
 
 if(argc<=1)
 {
-	usage(argv[0],"a Brainf**k Interpreter.");
+	usage(argv[0],"a Brainf**k Interpreter.",BFTAPE,sizeof(cell_t));
 	return 0;
 }
 

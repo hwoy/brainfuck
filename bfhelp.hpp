@@ -1,3 +1,5 @@
+
+
 struct path{
 	static constexpr const char * const grap(const char * const path)
 	{
@@ -17,13 +19,15 @@ static void showerr (unsigned int id,const char *err[],const char *str)
 }
 
 
-static void usage(const char *path,const char *str)
+static void usage(const char *path,const char *str,std::size_t tapesize,std::size_t cellsize)
 {
 	auto gpath=path::grap(path);
 	
-	std::cout << std::endl << gpath << " is " << str << std::endl << std::endl
+	std::cerr << std::endl << gpath << " is " << str << std::endl << std::endl
 						  << gpath << " input-file" << std::endl
 						  << gpath << " input-file output-file" << std::endl << std::endl;
+	
+	std::cerr << "TAPESIZE = " << tapesize << ", CELLSIZE = " << cellsize*8 << " bits"<< std::endl << std::endl;
 }
 
 static const char *err[] = {"Can not access INPUT FILE: ","Can not access OUTPUT FILE: ",nullptr};
@@ -31,7 +35,6 @@ static const char *err[] = {"Can not access INPUT FILE: ","Can not access OUTPUT
 enum{
 	err_fin,err_fout
 };
-
 
 #define BSIZE (4*1024)
 
