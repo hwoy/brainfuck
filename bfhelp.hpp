@@ -28,6 +28,31 @@ static void usage(const char *path,const char *str,std::size_t tapesize,std::siz
 						  << gpath << " input-file output-file" << std::endl << std::endl;
 	
 	std::cerr << "TAPESIZE = " << tapesize << ", CELLSIZE = " << cellsize*8 << " bits"<< std::endl << std::endl;
+	
+	#ifdef BFPROG
+	
+	std::cerr << "*** "
+	
+	#if  defined(EOF_UNCHANGED)
+			"If takes an EOF, unchanges a current value of cell."
+					
+	#elif defined(EOF_MINUS1) 
+			"If takes an EOF, changes a current value of cell to -1"
+					
+	#elif defined(EOF_0) 
+			"If takes an EOF, changes a current value of cell to 0"
+					
+	#else
+			"If takes an EOF, changes a current value of cell to this EOF value"
+
+				
+	#endif
+	
+	<< " ***" << std::endl << std::endl
+	
+	<< "***** Suggest EOF = " << std::char_traits<char>::eof() << " *****" << std::endl << std::endl;
+	
+	#endif
 }
 
 static const char *err[] = {"Can not access INPUT FILE: ","Can not access OUTPUT FILE: ",nullptr};

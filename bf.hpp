@@ -178,6 +178,7 @@ class Brainfuck
 		
 		while(ip != end)
 		{
+			int ch;
 			switch (*ip)
 			{
 				case '>': ++tape;  													break;
@@ -187,7 +188,23 @@ class Brainfuck
 				case '-': --(*tape);													break;
 
 				case '.': out << static_cast<char>(*tape.getptr()); out.flush(); break;
-				case ',': *tape.getptr_mutable() = std::cin.get();	 break;
+				case ',':
+				ch = std::cin.get();
+				
+				#if  defined(EOF_UNCHANGED)
+					if(ch !=  std::char_traits<char>::eof())
+						*tape.getptr_mutable() = ch;
+					
+				#elif defined(EOF_MINUS1) 
+					*tape.getptr_mutable()=(ch == std::char_traits<char>::eof()) ? -1 : ch;
+					
+				#elif defined(EOF_0) 
+					*tape.getptr_mutable()=(ch == std::char_traits<char>::eof()) ? 0 : ch;
+					
+				#else
+					*tape.getptr_mutable() = ch;
+				
+				#endif
 				
 				case '[': if (!*tape)	std::tie(ip,n) = openbracket(++ip,end);		break;	
 				case ']': if (*tape)		std::tie(ip,n) = closebracket(--ip,begin);	break;
